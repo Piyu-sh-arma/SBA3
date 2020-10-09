@@ -1,6 +1,6 @@
 package com.FSD.ITS.services;
 
-import com.FSD.ITS.daos.UserDetailsRepository;
+import com.FSD.ITS.daos.UserRepository;
 import com.FSD.ITS.entities.User;
 import com.FSD.ITS.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService {
     @Autowired
-    UserDetailsRepository repository;
+    UserRepository repository;
 
     @Override
     public List<User> getAllUsers() {

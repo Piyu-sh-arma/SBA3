@@ -5,7 +5,7 @@ import com.FSD.ITS.exceptions.NotFoundException;
 
 import java.util.List;
 
-public interface UserDetailsService {
+public interface UserService {
     List<User> getAllUsers();
     User getUserById(int userId) throws NotFoundException;
     User addUser(User user);

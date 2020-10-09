@@ -2,7 +2,7 @@ package com.FSD.ITS.controllers;
 
 import com.FSD.ITS.entities.User;
 import com.FSD.ITS.exceptions.NotFoundException;
-import com.FSD.ITS.services.UserDetailsService;
+import com.FSD.ITS.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
     @Autowired
-    UserDetailsService userService;
+    UserService userService;
 
     @GetMapping("/users")
     public List<User> getAllUsers(){
