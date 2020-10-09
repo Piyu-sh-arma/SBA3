@@ -29,6 +29,11 @@ public class UserController {
         return userService.addUser(user);
     }
 
+    @PutMapping("/user")
+    public User updateUser(@RequestBody User user) throws NotFoundException {
+        return userService.saveUser(user);
+    }
+
     @DeleteMapping("/users/{id}")
     public void deleteUsers(@PathVariable(value = "id") int userId){
         userService.deleteUser(userId);

@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int userId) {
         repository.deleteById(userId);
     }
+
+    @Override
+    public User saveUser(User user) throws NotFoundException {
+        repository.findById(user.getUserId()).orElseThrow(()->new NotFoundException("User","User Id",user.getUserId()));
+        return repository.save(user);
+    }
 }
