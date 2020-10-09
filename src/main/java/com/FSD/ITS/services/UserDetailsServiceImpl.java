@@ -2,13 +2,14 @@ package com.FSD.ITS.services;
 
 import com.FSD.ITS.daos.UserDetailsRepository;
 import com.FSD.ITS.entities.User;
+import com.FSD.ITS.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserDetailsImpl implements UserDetails{
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     UserDetailsRepository repository;
 
@@ -18,8 +19,8 @@ public class UserDetailsImpl implements UserDetails{
     }
 
     @Override
-    public User getUserById(int userId) {
-        return repository.findById(userId).orElseThrow();
+    public User getUserById(int userId) throws NotFoundException {
+        return repository.findById(userId).orElseThrow(()->new NotFoundException("User","User Id",userId));
     }
 
     @Override
