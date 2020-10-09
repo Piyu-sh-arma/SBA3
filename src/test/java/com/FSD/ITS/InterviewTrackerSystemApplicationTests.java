@@ -1,4 +1,4 @@
-package com.FSD.ITS.comFSDITS;
+package com.FSD.ITS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
