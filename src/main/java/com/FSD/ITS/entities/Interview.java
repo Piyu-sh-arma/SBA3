@@ -17,16 +17,10 @@ public class Interview {
     private String interviewName;
 
     @Column(name="interviewer")
-    private String interviewerName;
-
-    @Column(name="interviewee_id")
-    private int intervieweeId;
-
-    @Transient
-    private String intervieweeName;
+    private String interviewer;
 
     @Column(name="skills")
-    private String usersSkills;
+    private String skills;
 
     @Column(name = "start_time")
     private LocalTime time;
@@ -35,7 +29,7 @@ public class Interview {
     private LocalDate date;
 
     @Column(name="status")
-    private String interviewStatus;
+    private String status;
 
     @Column(name = "remarks")
     private String remarks;
