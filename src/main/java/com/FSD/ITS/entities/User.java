@@ -14,26 +14,26 @@ public class User {
     private int userId;
 
     @Column
-    @NotNull(message = "FName is required")
-    @NotBlank(message = "FName can't be blank")
-    @Size(min = 5,max = 30,message = "FName length should be between 5 to 30 Chars")
+//    @NotNull(message = "FName is required")
+//    @NotBlank(message = "FName can't be blank")
+//    @Size(min = 5,max = 30,message = "FName length should be between 5 to 30 Chars")
     private String fname;
 
     @Column
-    @NotNull(message = "LName is required")
-    @NotBlank(message = "LName can't be blank")
-    @Size(min = 5,max = 30,message = "LName length should be between 5 to 30 Chars")
+//    @NotNull(message = "LName is required")
+//    @NotBlank(message = "LName can't be blank")
+//    @Size(min = 5,max = 30,message = "LName length should be between 5 to 30 Chars")
     private String lName;
 
     @Column
-    @NotNull(message = "email is required")
-    @NotBlank(message = "email can't be blank")
+//    @NotNull(message = "email is required")
+//    @NotBlank(message = "email can't be blank")
     private String email;
 
     @Column
-    @NotNull(message = "mobile is required")
-    @NotBlank(message = "mobile can't be blank")
-    @Size(min = 10,max = 10,message = "mobile length should be between 10 Chars")
+//    @NotNull(message = "mobile is required")
+//    @NotBlank(message = "mobile can't be blank")
+//    @Size(min = 10,max = 10,message = "mobile length should be between 10 Chars")
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
