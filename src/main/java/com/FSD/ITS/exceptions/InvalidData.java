@@ -3,50 +3,14 @@ package com.FSD.ITS.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class InvalidData extends Exception {
-    private String resourceName;
-    private String fieldName;
-    private Object fieldValue;
+import java.util.List;
 
-    public InvalidData(String resourceName, String fieldName, Object fieldValue) {
-
-        super(String.format("%s not found with %s : '%s'",resourceName,fieldName,fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class InvalidData extends RuntimeException {
+    public InvalidData(List<String> msgs) {
+     super(msgs.toString());
     }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
-
-    public Object getFieldValue() {
-        return fieldValue;
-    }
-
-    public void setFieldValue(Object fieldValue) {
-        this.fieldValue = fieldValue;
-    }
-
-    @Override
-    public String toString() {
-        return "NotFoundException{" +
-                "resourceName='" + resourceName + '\'' +
-                ", fieldName='" + fieldName + '\'' +
-                ", fieldValue=" + fieldValue +
-                '}';
+    public InvalidData(String msg) {
+        super(msg);
     }
 }

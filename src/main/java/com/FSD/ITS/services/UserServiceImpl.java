@@ -2,11 +2,15 @@ package com.FSD.ITS.services;
 
 import com.FSD.ITS.daos.UserRepository;
 import com.FSD.ITS.entities.User;
+import com.FSD.ITS.exceptions.InvalidData;
 import com.FSD.ITS.exceptions.NotFoundException;
+import com.FSD.ITS.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,23 +23,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int userId) throws NotFoundException {
-        return repository.findById(userId).orElseThrow(()->new NotFoundException("User","User Id",userId));
+    public User getUserById(int userId) {
+        return repository.findById(userId).orElseThrow(() -> new NotFoundException("User", "User Id", userId));
     }
 
     @Override
+    @Transactional
     public User addUser(User user) {
-        return repository.save(user);
+        UserValidator userValidator = new UserValidator();
+        if (userValidator.validateUser(user)) {
+            Optional<User> usr = repository.findById(user.getUserId());
+            if (usr.isPresent()) {
+                throw new InvalidData(user.getUserId() + " is already present");
+            } else {
+                return repository.save(user);
+            }
+        } else
+            throw new InvalidData(userValidator.getErrors());
     }
 
+    @Transactional
     @Override
     public void deleteUser(int userId) {
         repository.deleteById(userId);
     }
 
+    @Transactional
     @Override
-    public User saveUser(User user) throws NotFoundException {
-        repository.findById(user.getUserId()).orElseThrow(()->new NotFoundException("User","User Id",user.getUserId()));
-        return repository.save(user);
+    public User saveUser(User user) {
+        UserValidator userValidator = new UserValidator();
+        if (userValidator.validateUser(user)) {
+            repository.findById(user.getUserId()).orElseThrow(() -> new NotFoundException("User", "User Id", user.getUserId()));
+            return repository.save(user);
+        } else
+            throw new InvalidData(userValidator.getErrors());
     }
 }

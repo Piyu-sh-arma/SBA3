@@ -1,6 +1,7 @@
 package com.FSD.ITS.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,7 +10,7 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @NotNull(message = "User id is required.")
     private int userId;
 
     @Column
@@ -33,6 +34,7 @@ public class User {
     @NotNull(message = "mobile is required")
     @NotBlank(message = "mobile can't be blank")
     @Size(min = 10,max = 10,message = "mobile length should be between 10 Chars")
+//    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
     public User(int userId) {
