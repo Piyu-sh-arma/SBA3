@@ -42,6 +42,9 @@ public class Interview {
     @Column(name = "remarks")
     private String remarks;
 
+    @OneToOne(mappedBy = "interview")
+    private User user;
+
     public int getInterviewId() {
         return interviewId;
     }

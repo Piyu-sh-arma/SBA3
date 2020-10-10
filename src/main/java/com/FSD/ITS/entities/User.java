@@ -1,7 +1,6 @@
 package com.FSD.ITS.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +35,23 @@ public class User {
 //    @Size(min = 10,max = 10,message = "mobile length should be between 10 Chars")
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "usr_interview",
+            joinColumns =
+                    {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns =
+                    {@JoinColumn(name = "interview_id", referencedColumnName = "interview_id")})
+    private Interview interview;
+
+    public void setInterview(Interview interview) {
+        this.interview = interview;
+    }
+
+    public Interview getInterview() {
+        return interview;
+    }
 
     public User(int userId) {
         this.userId = userId;
@@ -89,7 +105,8 @@ public class User {
         this.mobile = mobile;
     }
 
-    public User(){}
+    public User() {
+    }
 
     @Override
     public String toString() {
