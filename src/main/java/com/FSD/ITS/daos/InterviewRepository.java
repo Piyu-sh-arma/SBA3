@@ -7,6 +7,6 @@ import org.w3c.dom.stylesheets.LinkStyle;
 import java.util.List;
 
 public interface InterviewRepository extends JpaRepository<Interview, Integer> {
-    Interview findByInterviewName(String interviewName);
+    List<Interview> findByInterviewName(String interviewName);
     List<Interview> findAllByInterviewer(String interviewer);
 }

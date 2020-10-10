@@ -11,6 +11,6 @@ public interface InterviewService {
     List<Interview> getInterviews();
     int getInterviewsCount();
     Interview findByInterviewId(int interviewId);
-    Interview findByInterviewName(String interviewName);
+    List<Interview> findAllByInterviewName(String interviewName);
     List<Interview> findAllByInterviewer(String interviewer);
 }

@@ -20,6 +20,26 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
+    public int getInterviewsCount() {
+        return interviewRepository.findAll().size();
+    }
+
+    @Override
+    public Interview findByInterviewId(int interviewId) {
+        return interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id" + interviewId + " is missing is db."));
+    }
+
+    @Override
+    public List<Interview> findAllByInterviewName(String interviewName) {
+        return interviewRepository.findByInterviewName(interviewName);
+    }
+
+    @Override
+    public List<Interview> findAllByInterviewer(String interviewer) {
+        return interviewRepository.findAllByInterviewer(interviewer);
+    }
+
+    @Override
     public Interview addInterview(Interview interview) {
         return interviewRepository.save(interview);
     }
@@ -31,26 +51,6 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public Interview updateInterview(Interview interview) {
-        return null;
-    }
-
-    @Override
-    public int getInterviewsCount() {
-        return 0;
-    }
-
-    @Override
-    public Interview findByInterviewId(int interviewId) {
-        return interviewRepository.findById(interviewId).orElseThrow(()->new InvalidData("Interview Id"+interviewId+" is missing is db."));
-    }
-
-    @Override
-    public Interview findByInterviewName(String interviewName) {
-        return null;
-    }
-
-    @Override
-    public List<Interview> findAllByInterviewer(String interviewer) {
         return null;
     }
 }

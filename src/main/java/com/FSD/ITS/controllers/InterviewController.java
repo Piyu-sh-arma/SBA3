@@ -8,24 +8,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/interviews")
 public class InterviewController {
     @Autowired
     InterviewService interviewService;
 
-    @GetMapping("/interviews")
-    public List<Interview> getInterviews(){
+    @GetMapping({"","/"})
+    public List<Interview> getInterviews() {
         return interviewService.getInterviews();
     }
 
-    @PostMapping("/interviews")
-    public Interview addInterview(Interview interview){
-        return interviewService.addInterview(interview);
+    @GetMapping("/{id}")
+    public Interview getInterviewById(@PathVariable(value = "id") int id) {
+        return interviewService.findByInterviewId(id);
     }
 
-    @GetMapping("/interviews/{id}")
-    public Interview getInterviewById(@PathVariable(value = "id") int id){
-        return interviewService.findByInterviewId(id);
+    @GetMapping("/interview/{name}")
+    public List<Interview> getInterviewByName(@PathVariable(value = "name") String name) {
+        return interviewService.findAllByInterviewName(name);
+    }
+
+    @GetMapping("/interviewer/{name}")
+    public List<Interview> getInterviewBy(@PathVariable(value = "name") String interviewer) {
+        return interviewService.findAllByInterviewer(interviewer);
+    }
+
+    @GetMapping("/count")
+    public int getInterviewCount() {
+        return interviewService.getInterviewsCount();
+    }
+
+    @PostMapping("/")
+    public Interview addInterview(@RequestBody Interview interview) {
+        System.err.println(interview.getTime().getHour() + ":" + interview.getTime().getMinute() + ":" + interview.getTime().getSecond());
+        return interviewService.addInterview(interview);
     }
 
 }
