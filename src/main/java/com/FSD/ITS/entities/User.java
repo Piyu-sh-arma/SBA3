@@ -36,23 +36,6 @@ public class User {
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "usr_interview",
-            joinColumns =
-                    {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns =
-                    {@JoinColumn(name = "interview_id", referencedColumnName = "interview_id")})
-    private Interview interview;
-
-    public void setInterview(Interview interview) {
-        this.interview = interview;
-    }
-
-    public Interview getInterview() {
-        return interview;
-    }
-
     public User(int userId) {
         this.userId = userId;
     }

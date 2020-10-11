@@ -1,10 +1,13 @@
 package com.FSD.ITS.controllers;
 
 import com.FSD.ITS.entities.Interview;
+import com.FSD.ITS.entities.User;
 import com.FSD.ITS.services.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -38,9 +41,8 @@ public class InterviewController {
         return interviewService.getInterviewsCount();
     }
 
-    @PostMapping("/")
+    @PostMapping({"","/"})
     public Interview addInterview(@RequestBody Interview interview) {
-        System.err.println(interview.getTime().getHour() + ":" + interview.getTime().getMinute() + ":" + interview.getTime().getSecond());
         return interviewService.addInterview(interview);
     }
 
