@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface InterviewService {
     Interview addInterview(Interview interview);
-    String deleteInterview(int interviewId);
+    void deleteInterview(int interviewId);
     Interview updateInterview(Interview interview);
     List<Interview> getInterviews();
     int getInterviewsCount();

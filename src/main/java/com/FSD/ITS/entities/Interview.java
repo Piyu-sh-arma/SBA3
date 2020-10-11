@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "interview")
@@ -20,40 +21,42 @@ public class Interview {
     private String interviewName;
 
     @NotNull
-    @Column(name="interviewer")
+    @Column(name = "interviewer")
     private String interviewer;
 
     @NotNull
-    @Column(name="skills")
+    @Column(name = "skills")
     private String skills;
 
     @Column(name = "start_time")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime time;
 
-    @Column(name="start_date")
+    @Column(name = "start_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 
     @NotNull
     @Column(name = "remarks")
     private String remarks;
 
-    @OneToOne()
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany
+    @JoinTable(name = "interview_user",
+            joinColumns = {@JoinColumn(name = "interview_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private List<User> users;
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
-
 
     public int getInterviewId() {
         return interviewId;
@@ -134,7 +137,8 @@ public class Interview {
         this.interviewId = interviewId;
     }
 
-    public Interview(){}
+    public Interview() {
+    }
 
     @Override
     public String toString() {

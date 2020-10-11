@@ -6,8 +6,6 @@ import com.FSD.ITS.services.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -16,7 +14,7 @@ public class InterviewController {
     @Autowired
     InterviewService interviewService;
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Interview> getInterviews() {
         return interviewService.getInterviews();
     }
@@ -36,14 +34,24 @@ public class InterviewController {
         return interviewService.findAllByInterviewer(interviewer);
     }
 
+    @GetMapping("/attendees/{interviewId}")
+    public List<User> getAttendees(@PathVariable(value = "interviewId") int interviewId) {
+        return interviewService.findByInterviewId(interviewId).getUsers();
+    }
+
     @GetMapping("/count")
     public int getInterviewCount() {
         return interviewService.getInterviewsCount();
     }
 
-    @PostMapping({"","/"})
+    @PostMapping({"", "/"})
     public Interview addInterview(@RequestBody Interview interview) {
         return interviewService.addInterview(interview);
+    }
+
+    @DeleteMapping({"/{id}"})
+    public void deleteInterview(@PathVariable(value = "id") int id) {
+        interviewService.deleteInterview(id);
     }
 
 }

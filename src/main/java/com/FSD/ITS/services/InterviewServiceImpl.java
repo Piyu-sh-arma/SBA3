@@ -47,8 +47,8 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public String deleteInterview(int interviewId) {
-        return null;
+    public void deleteInterview(int interviewId) {
+        interviewRepository.deleteById(interviewId);
     }
 
     @Override
