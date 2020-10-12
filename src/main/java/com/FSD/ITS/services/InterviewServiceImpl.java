@@ -60,6 +60,7 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
+    @Transactional
     public void deleteInterview(int interviewId) {
 
         if (interviewRepository.findById(interviewId).isPresent())
@@ -69,6 +70,7 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
+    @Transactional
     public Interview updateInterview(Interview interview) {
         InterviewValidator interviewValidator = new InterviewValidator();
         if (interviewValidator.validateInterview(interview)) {
@@ -81,13 +83,15 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
+    @Transactional
     public Interview addUsersToInterview(int interviewId, int userId) {
-        Interview interview = interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id : " + interviewId + " is not found."));
-        User user = userRepository.findById(userId).orElseThrow(() -> new InvalidData("User Id : " + userId + " not found."));
-        if (interview.getUsers().stream().noneMatch(user1 -> user1.getUserId() == userId)) {
-            interview.getUsers().add(user);
-            return interviewRepository.save(interview);
-        } else
-            throw new InvalidData("User Id : " + userId + " is already mapped");
+//        Interview interview = interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id : " + interviewId + " is not found."));
+//        User user = userRepository.findById(userId).orElseThrow(() -> new InvalidData("User Id : " + userId + " not found."));
+//        if (interview.getUsers().stream().noneMatch(user1 -> user1.getUserId() == userId)) {
+//            interview.getUsers().add(user);
+//            return interviewRepository.save(interview);
+//        } else
+//            throw new InvalidData("User Id : " + userId + " is already mapped");
+        return null;
     }
 }

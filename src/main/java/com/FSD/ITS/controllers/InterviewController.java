@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/interviews")
@@ -36,9 +37,11 @@ public class InterviewController {
     }
 
     @GetMapping("/attendees/{interviewId}")
-    public List<User> getAttendees(@PathVariable(value = "interviewId") int interviewId) {
-        return interviewService.findByInterviewId(interviewId).getUsers();
+    public Set<User> getAttendees(@PathVariable(value = "interviewId") int interviewId) {
+//        return interviewService.findByInterviewId(interviewId).getUsers();
+        return null;
     }
+
 
     @GetMapping("/count")
     public int getInterviewCount() {

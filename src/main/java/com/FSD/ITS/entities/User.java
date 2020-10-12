@@ -1,12 +1,17 @@
 package com.FSD.ITS.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "jsonId")
 public class User {
     @Id
     @NotNull(message = "User id is required.")
@@ -35,6 +40,18 @@ public class User {
 //    @Size(min = 10,max = 10,message = "mobile length should be between 10 Chars")
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
+
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<InterviewUser> interviewsUser;
+
+    public Set<InterviewUser> getInterviewsUser() {
+        return interviewsUser;
+    }
+
+    public void setInterviewsUser(Set<InterviewUser> interviewsUser) {
+        this.interviewsUser = interviewsUser;
+    }
 
     public User(int userId) {
         this.userId = userId;

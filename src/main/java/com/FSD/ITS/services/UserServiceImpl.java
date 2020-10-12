@@ -17,6 +17,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository repository;
 
+    @Autowired
+    InterviewUserService interviewUserService;
+
     @Override
     public List<User> getAllUsers() {
         return repository.findAll();
@@ -24,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(int userId) {
-        return repository.findById(userId).orElseThrow(() -> new InvalidData("User Id"+userId+" not found."));
+        return repository.findById(userId).orElseThrow(() -> new InvalidData("User Id" + userId + " not found."));
     }
 
     @Override
@@ -45,7 +48,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(int userId) {
-        repository.deleteById(userId);
+        if (repository.findById(userId).isPresent()) {
+            interviewUserService.deleteByUserId(userId);
+            repository.deleteById(userId);
+        } else
+            throw new InvalidData("User Id : " + userId + " is invalid");
     }
 
     @Transactional

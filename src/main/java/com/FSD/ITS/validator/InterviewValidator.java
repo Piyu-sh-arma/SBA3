@@ -11,8 +11,8 @@ public class InterviewValidator {
     public boolean validateInterview(Interview interview) {
         errors = new ArrayList<>();
         if (null != interview) {
-            if (interview.getInterviewId() == 0)
-                errors.add("Interview Id can't be 0");
+//            if (interview.getInterviewId() == 0)
+//                errors.add("Interview Id can't be 0");
 
             if (null != interview.getInterviewName()) {
                 int interviewNameLen = interview.getInterviewName().trim().length();

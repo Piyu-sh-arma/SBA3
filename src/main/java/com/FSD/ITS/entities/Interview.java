@@ -1,15 +1,19 @@
 package com.FSD.ITS.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "interview")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "jsonId")
 public class Interview {
     @Id
     @NotNull
@@ -43,20 +47,10 @@ public class Interview {
     @Column(name = "remarks")
     private String remarks;
 
-    @OneToMany
-    @JoinTable(name = "interview_user",
-            joinColumns = {@JoinColumn(name = "interview_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
-    private List<User> users;
 
-    public List<User> getUsers() {
-        return users;
-    }
+    @OneToMany(mappedBy = "interview")
+    private Set<InterviewUser> interviewUsers;
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 
     public int getInterviewId() {
         return interviewId;
