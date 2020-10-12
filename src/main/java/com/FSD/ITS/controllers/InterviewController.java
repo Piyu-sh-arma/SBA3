@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/interviews")
@@ -51,6 +52,13 @@ public class InterviewController {
         return interviewService.addInterview(interview);
     }
 
+    @PostMapping({"/addUsers"})
+    public Interview addUsers(@RequestBody Map<String, Integer> details) {
+        int userId = details.get("userId");
+        int interviewId = details.get("interviewId");
+        return interviewService.addUsersToInterview(interviewId, userId);
+    }
+
     @PutMapping({"", "/"})
     public Interview updateInterview(@RequestBody Interview interview) {
         return interviewService.updateInterview(interview);
@@ -62,3 +70,4 @@ public class InterviewController {
     }
 
 }
+

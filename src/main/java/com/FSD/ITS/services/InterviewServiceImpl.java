@@ -1,7 +1,9 @@
 package com.FSD.ITS.services;
 
 import com.FSD.ITS.daos.InterviewRepository;
+import com.FSD.ITS.daos.UserRepository;
 import com.FSD.ITS.entities.Interview;
+import com.FSD.ITS.entities.User;
 import com.FSD.ITS.exceptions.InvalidData;
 import com.FSD.ITS.validator.InterviewValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class InterviewServiceImpl implements InterviewService {
     @Autowired
     InterviewRepository interviewRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public List<Interview> getInterviews() {
         return interviewRepository.findAll();
@@ -28,7 +33,7 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public Interview findByInterviewId(int interviewId) {
-        return interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id" + interviewId + " is not found."));
+        return interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id : " + interviewId + " is not found."));
     }
 
     @Override
@@ -73,5 +78,16 @@ public class InterviewServiceImpl implements InterviewService {
                 return interviewRepository.save(interview);
         } else
             throw new InvalidData(interviewValidator.getErrors());
+    }
+
+    @Override
+    public Interview addUsersToInterview(int interviewId, int userId) {
+        Interview interview = interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id : " + interviewId + " is not found."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new InvalidData("User Id : " + userId + " not found."));
+        if (interview.getUsers().stream().noneMatch(user1 -> user1.getUserId() == userId)) {
+            interview.getUsers().add(user);
+            return interviewRepository.save(interview);
+        } else
+            throw new InvalidData("User Id : " + userId + " is already mapped");
     }
 }
