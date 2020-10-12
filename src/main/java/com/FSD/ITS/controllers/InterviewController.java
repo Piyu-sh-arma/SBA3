@@ -41,11 +41,18 @@ public class InterviewController {
 
     @GetMapping("/count")
     public int getInterviewCount() {
+
         return interviewService.getInterviewsCount();
     }
 
     @PostMapping({"", "/"})
     public Interview addInterview(@RequestBody Interview interview) {
+
+        return interviewService.addInterview(interview);
+    }
+
+    @PutMapping({"", "/"})
+    public Interview updateInterview(@RequestBody Interview interview) {
         return interviewService.addInterview(interview);
     }
 

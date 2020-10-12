@@ -3,6 +3,7 @@ package com.FSD.ITS.services;
 import com.FSD.ITS.daos.InterviewRepository;
 import com.FSD.ITS.entities.Interview;
 import com.FSD.ITS.exceptions.InvalidData;
+import com.FSD.ITS.validator.InterviewValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public Interview findByInterviewId(int interviewId) {
-        return interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id" + interviewId + " is missing is db."));
+        return interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id" + interviewId + " is not found."));
     }
 
     @Override
@@ -43,16 +44,34 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     @Transactional
     public Interview addInterview(Interview interview) {
-        return interviewRepository.save(interview);
+        InterviewValidator interviewValidator = new InterviewValidator();
+        if (interviewValidator.validateInterview(interview)) {
+            if (interviewRepository.findById(interview.getInterviewId()).isEmpty())
+                return interviewRepository.save(interview);
+            else
+                throw new InvalidData("Interview Id is already present.");
+        } else
+            throw new InvalidData(interviewValidator.getErrors());
     }
 
     @Override
     public void deleteInterview(int interviewId) {
-        interviewRepository.deleteById(interviewId);
+
+        if (interviewRepository.findById(interviewId).isPresent())
+            interviewRepository.deleteById(interviewId);
+        else
+            throw new InvalidData("Interview Id is not found.");
     }
 
     @Override
     public Interview updateInterview(Interview interview) {
-        return null;
+        InterviewValidator interviewValidator = new InterviewValidator();
+        if (interviewValidator.validateInterview(interview)) {
+            if (interviewRepository.findById(interview.getInterviewId()).isEmpty())
+                throw new InvalidData("Interview Id is not found.");
+            else
+                return interviewRepository.save(interview);
+        } else
+            throw new InvalidData(interviewValidator.getErrors());
     }
 }
