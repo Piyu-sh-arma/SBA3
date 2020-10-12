@@ -53,7 +53,7 @@ public class InterviewController {
 
     @PutMapping({"", "/"})
     public Interview updateInterview(@RequestBody Interview interview) {
-        return interviewService.addInterview(interview);
+        return interviewService.updateInterview(interview);
     }
 
     @DeleteMapping({"/{id}"})

@@ -7,10 +7,12 @@ import java.util.List;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class InvalidData extends RuntimeException {
-    public InvalidData(List<String> msgs) {
-     super(msgs.toString());
-    }
     public InvalidData(String msg) {
         super(msg);
     }
+
+    public InvalidData(List<String> msgs) {
+        this(String.join(";", msgs));
+    }
+
 }
