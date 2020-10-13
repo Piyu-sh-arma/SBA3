@@ -161,4 +161,14 @@ public class Interview {
                 ", users=" + users +
                 '}';
     }
+
+    public void copyInterview(Interview interview) {
+        this.setRemarks(interview.getRemarks());
+        this.setInterviewName(interview.getInterviewName());
+        this.setInterviewer(interview.getInterviewer());
+        this.setDate(interview.getDate());
+        this.setTime(interview.getTime());
+        this.setSkills(interview.getSkills());
+        this.setStatus(interview.getStatus());
+    }
 }

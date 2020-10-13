@@ -85,13 +85,7 @@ public class InterviewServiceImpl implements InterviewService {
         InterviewValidator interviewValidator = new InterviewValidator();
         if (interviewValidator.validateInterview(updatedInterview)) {
             Interview curInterview = interviewRepository.findById(updatedInterview.getInterviewId()).orElseThrow(() -> new InvalidData("Interview Id is not found."));
-            curInterview.setRemarks(updatedInterview.getRemarks());
-            curInterview.setInterviewName(updatedInterview.getInterviewName());
-            curInterview.setInterviewer(updatedInterview.getInterviewer());
-            curInterview.setDate(updatedInterview.getDate());
-            curInterview.setTime(updatedInterview.getTime());
-            curInterview.setSkills(curInterview.getSkills());
-            curInterview.setStatus(updatedInterview.getStatus());
+            curInterview.copyInterview(updatedInterview);
             if (null != updatedInterview.getUsers()) {
                 List<Integer> userIds = updatedInterview.getUsers().stream().map(User::getUserId).collect(Collectors.toList());
                 List<User> users = userRepository.findAllById(userIds);

@@ -41,12 +41,6 @@ public class User {
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
-
-    //    @ManyToMany
-//    @JoinTable(name = "interview_user",
-//            inverseJoinColumns = {@JoinColumn(name = "interview_id")},
-//            joinColumns = {@JoinColumn(name = "user_id")}
-//    )
     @ManyToMany(mappedBy = "users")
     private Set<Interview> interviews;
 
@@ -121,5 +115,12 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(userId);
+    }
+
+    public void copyUser(User user) {
+        this.setEmail(user.getEmail());
+        this.setFname(user.getFname());
+        this.setlName(user.getlName());
+        this.setMobile(user.getMobile());
     }
 }

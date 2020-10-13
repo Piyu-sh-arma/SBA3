@@ -65,21 +65,18 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User saveUser(User user) {
+    public User saveUser(User updatedUser) {
         UserValidator userValidator = new UserValidator();
-        if (userValidator.validateUser(user)) {
-            User curUser = userRepository.findById(user.getUserId()).orElseThrow(() -> new NotFoundException("User", "User Id", user.getUserId()));
-            curUser.setEmail(user.getEmail());
-            curUser.setFname(user.getFname());
-            curUser.setlName(user.getlName());
-            curUser.setMobile(user.getMobile());
-            if (null != user.getInterviews()) {
-                user.getInterviews().forEach(interview -> {
-                    interviewService.addUsersToInterview(interview.getInterviewId(), user.getUserId());
+        if (userValidator.validateUser(updatedUser)) {
+            User curUserWithThisId = userRepository.findById(updatedUser.getUserId()).orElseThrow(() -> new NotFoundException("User", "User Id", updatedUser.getUserId()));
+            curUserWithThisId.copyUser(updatedUser);
+            if (null != updatedUser.getInterviews()) {
+                updatedUser.getInterviews().forEach(interview -> {
+                    interviewService.addUsersToInterview(interview.getInterviewId(), updatedUser.getUserId());
                 });
             }
-            userRepository.save(curUser);
-            return user;
+            userRepository.save(curUserWithThisId);
+            return updatedUser;
         } else
             throw new InvalidData(userValidator.getErrors());
     }
