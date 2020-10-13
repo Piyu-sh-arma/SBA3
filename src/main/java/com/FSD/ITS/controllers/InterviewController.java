@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -54,8 +53,13 @@ public class InterviewController {
     }
 
     @PutMapping({"/addUsers/{interviewId}/{userId}"})
-    public Interview addUsers(@PathVariable(value = "interviewId") int interviewId,@PathVariable(value = "userId") int userId) {
+    public Interview addUsers(@PathVariable(value = "interviewId") int interviewId, @PathVariable(value = "userId") int userId) {
         return interviewService.addUsersToInterview(interviewId, userId);
+    }
+
+    @PutMapping({"/removeUsers/{interviewId}/{userId}"})
+    public Interview removeUsers(@PathVariable(value = "interviewId") int interviewId, @PathVariable(value = "userId") int userId) {
+        return interviewService.removeUsersFromInterview(interviewId, userId);
     }
 
     @PutMapping({"", "/"})

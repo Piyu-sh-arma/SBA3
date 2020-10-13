@@ -41,7 +41,13 @@ public class User {
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+
+    //    @ManyToMany
+//    @JoinTable(name = "interview_user",
+//            inverseJoinColumns = {@JoinColumn(name = "interview_id")},
+//            joinColumns = {@JoinColumn(name = "user_id")}
+//    )
+    @ManyToMany(mappedBy = "users")
     private Set<Interview> interviews;
 
     public int getUserId() {
@@ -104,20 +110,16 @@ public class User {
                 '}';
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        User user = (User) o;
-//        return userId == user.userId &&
-//                Objects.equals(fname, user.fname) &&
-//                Objects.equals(lName, user.lName) &&
-//                Objects.equals(email, user.email) &&
-//                Objects.equals(mobile, user.mobile);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(userId, fname, lName, email, mobile);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 }

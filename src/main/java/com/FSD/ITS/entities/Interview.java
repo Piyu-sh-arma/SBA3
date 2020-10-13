@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,7 +47,7 @@ public class Interview {
     @Column(name = "remarks")
     private String remarks;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "interview_user",
             joinColumns = {@JoinColumn(name = "interview_id")},
@@ -129,25 +130,21 @@ public class Interview {
         this.users = users;
     }
 
+    public void addUsers(List<User> users) {
+        this.getUsers().addAll(users);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Interview interview = (Interview) o;
-        return interviewId == interview.interviewId &&
-                Objects.equals(interviewName, interview.interviewName) &&
-                Objects.equals(interviewer, interview.interviewer) &&
-                Objects.equals(skills, interview.skills) &&
-                Objects.equals(time, interview.time) &&
-                Objects.equals(date, interview.date) &&
-                Objects.equals(status, interview.status) &&
-                Objects.equals(remarks, interview.remarks) &&
-                Objects.equals(users, interview.users);
+        return interviewId == interview.interviewId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(interviewId, interviewName, interviewer, skills, time, date, status, remarks, users);
+        return Objects.hash(interviewId);
     }
 
     @Override
