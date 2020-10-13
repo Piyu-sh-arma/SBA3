@@ -1,19 +1,22 @@
 package com.FSD.ITS.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "interview")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@jsonid")
 public class Interview {
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int interviewId;
 
     @NotNull
@@ -43,19 +46,15 @@ public class Interview {
     @Column(name = "remarks")
     private String remarks;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "interview_user",
             joinColumns = {@JoinColumn(name = "interview_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private List<User> users;
+    private Set<User> users;
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public Interview() {
     }
 
     public int getInterviewId() {
@@ -122,22 +121,33 @@ public class Interview {
         this.remarks = remarks;
     }
 
-    public Interview(@NotNull int interviewId, String interviewName, String interviewer, String skills, LocalTime time, LocalDate date, String status, String remarks) {
-        this.interviewId = interviewId;
-        this.interviewName = interviewName;
-        this.interviewer = interviewer;
-        this.skills = skills;
-        this.time = time;
-        this.date = date;
-        this.status = status;
-        this.remarks = remarks;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public Interview(@NotNull int interviewId) {
-        this.interviewId = interviewId;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public Interview() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Interview interview = (Interview) o;
+        return interviewId == interview.interviewId &&
+                Objects.equals(interviewName, interview.interviewName) &&
+                Objects.equals(interviewer, interview.interviewer) &&
+                Objects.equals(skills, interview.skills) &&
+                Objects.equals(time, interview.time) &&
+                Objects.equals(date, interview.date) &&
+                Objects.equals(status, interview.status) &&
+                Objects.equals(remarks, interview.remarks) &&
+                Objects.equals(users, interview.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(interviewId, interviewName, interviewer, skills, time, date, status, remarks, users);
     }
 
     @Override
@@ -151,6 +161,7 @@ public class Interview {
                 ", date=" + date +
                 ", status='" + status + '\'' +
                 ", remarks='" + remarks + '\'' +
+                ", users=" + users +
                 '}';
     }
 }

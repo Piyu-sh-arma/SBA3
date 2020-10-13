@@ -22,4 +22,5 @@ public interface InterviewService {
     List<Interview> findAllByInterviewer(String interviewer);
 
     Interview addUsersToInterview(int interviewId, int userId);
+    Interview removeUsersFromInterview(int interviewId, int userId);
 }

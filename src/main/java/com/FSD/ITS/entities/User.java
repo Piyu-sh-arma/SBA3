@@ -1,15 +1,20 @@
 package com.FSD.ITS.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@jsonid")
 public class User {
     @Id
     @NotNull(message = "User id is required.")
+
     private int userId;
 
     @Column
@@ -36,9 +41,8 @@ public class User {
 //    @Digits(integer = 10, fraction = 0, message = "Digits Error")
     private String mobile;
 
-    public User(int userId) {
-        this.userId = userId;
-    }
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Set<Interview> interviews;
 
     public int getUserId() {
         return userId;
@@ -80,15 +84,12 @@ public class User {
         this.mobile = mobile;
     }
 
-    public User(int userId, @NotNull(message = "FName is required") @NotBlank(message = "FName can't be blank") @Size(min = 5, max = 30, message = "FName length should be between 5 to 30 Chars") String fname, @NotNull(message = "LName is required") @NotBlank(message = "LName can't be blank") @Size(min = 5, max = 30, message = "LName length should be between 5 to 30 Chars") String lName, @NotNull(message = "email is required") @NotBlank(message = "email can't be blank") String email, @NotNull(message = "mobile is required") @NotBlank(message = "mobile can't be blank") @Size(min = 10, max = 10, message = "mobile length should be between 10 Chars") String mobile) {
-        this.userId = userId;
-        this.fname = fname;
-        this.lName = lName;
-        this.email = email;
-        this.mobile = mobile;
+    public Set<Interview> getInterviews() {
+        return interviews;
     }
 
-    public User() {
+    public void setInterviews(Set<Interview> interviews) {
+        this.interviews = interviews;
     }
 
     @Override
@@ -99,6 +100,24 @@ public class User {
                 ", lName='" + lName + '\'' +
                 ", email='" + email + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", interviews=" + interviews +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                Objects.equals(fname, user.fname) &&
+                Objects.equals(lName, user.lName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(mobile, user.mobile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, fname, lName, email, mobile);
     }
 }
