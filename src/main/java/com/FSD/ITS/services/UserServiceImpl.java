@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
                 } else
                     userRepository.save(user);
             } else
-                throw new InvalidData("Can't select interviews while creating new user.");
+                throw new InvalidData("Can't select interviews when creating new user.");
         } else
             throw new InvalidData(userValidator.getErrors());
         return user;

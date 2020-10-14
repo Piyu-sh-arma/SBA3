@@ -63,7 +63,7 @@ public class InterviewServiceImpl implements InterviewService {
                 else
                     throw new InvalidData("Interview Id : " + interview.getInterviewId() + " is already present.");
             } else
-                throw new InvalidData("Can't assign users while creating new interview.");
+                throw new InvalidData("Can't assign users when creating new interview.");
         } else
             throw new InvalidData(interviewValidator.getErrors());
         return interview;
