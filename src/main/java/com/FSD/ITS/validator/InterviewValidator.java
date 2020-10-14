@@ -28,7 +28,7 @@ public class InterviewValidator {
                 int interviewerNameLen = interview.getInterviewer().trim().length();
                 if (interviewerNameLen > 0) {
                     if (interviewerNameLen < 5 || interviewerNameLen > 30)
-                        errors.add("Interviewer name length should be between 3 to 30 Chars.");
+                        errors.add("Interviewer name length should be between 5 to 30 Chars.");
                 } else
                     errors.add("Interviewer Name can't be blank.");
             } else
