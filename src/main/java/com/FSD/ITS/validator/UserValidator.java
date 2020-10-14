@@ -11,8 +11,8 @@ public class UserValidator {
     public boolean validateUser(User user) {
         errors = new ArrayList<>();
         if (null != user) {
-//            if (user.getUserId() == 0)
-//                errors.add("User Id can't be 0");
+            if (user.getUserId() == 0)
+                errors.add("User Id is required and can't be 0");
 
             if (null != user.getFname()) {
                 int fNameLen = user.getFname().trim().length();

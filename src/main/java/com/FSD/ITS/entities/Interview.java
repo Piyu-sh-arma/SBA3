@@ -48,7 +48,7 @@ public class Interview {
     private String remarks;
 
 //    @ManyToMany
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "interview_user",
             joinColumns = {@JoinColumn(name = "interview_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
