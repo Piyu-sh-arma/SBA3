@@ -4,7 +4,6 @@ import com.FSD.ITS.daos.UserRepository;
 import com.FSD.ITS.entities.Interview;
 import com.FSD.ITS.entities.User;
 import com.FSD.ITS.exceptions.InvalidData;
-import com.FSD.ITS.exceptions.NotFoundException;
 import com.FSD.ITS.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,11 +46,12 @@ public class UserServiceImpl implements UserService {
                 if (usr.isPresent()) {
                     throw new InvalidData("User Id : " + user.getUserId() + " is already present");
                 } else
-                    return userRepository.save(user);
+                    userRepository.save(user);
             } else
-                throw new InvalidData("Can't select users while creating new user.");
+                throw new InvalidData("Can't select interviews while creating new user.");
         } else
             throw new InvalidData(userValidator.getErrors());
+        return user;
     }
 
     @Transactional
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User updatedUser) {
         UserValidator userValidator = new UserValidator();
         if (userValidator.validateUser(updatedUser)) {
-            User curUserWithThisId = userRepository.findById(updatedUser.getUserId()).orElseThrow(() -> new NotFoundException("User", "User Id", updatedUser.getUserId()));
+            User curUserWithThisId = userRepository.findById(updatedUser.getUserId()).orElseThrow(() -> new InvalidData("User Id : " + updatedUser.getUserId() + " not found."));
             curUserWithThisId.copyUser(updatedUser);
             if (null != updatedUser.getInterviews()) {
                 updatedUser.getInterviews().forEach(interview -> {

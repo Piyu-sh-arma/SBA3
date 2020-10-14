@@ -47,8 +47,8 @@ public class Interview {
     @Column(name = "remarks")
     private String remarks;
 
-    @ManyToMany
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "interview_user",
             joinColumns = {@JoinColumn(name = "interview_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
