@@ -40,6 +40,11 @@ public class InterviewController {
         return interviewService.findByInterviewId(interviewId).getUsers();
     }
 
+    @PutMapping("/updateStatus/{interviewId}/{interviewStatus}")
+    public Interview updateInterviewStatus(@PathVariable(value = "interviewId") int interviewId, @PathVariable(value = "interviewStatus") String interviewStatus) {
+        return interviewService.updateInterviewStatus(interviewId,interviewStatus);
+    }
+
     @GetMapping("/count")
     public int getInterviewCount() {
 

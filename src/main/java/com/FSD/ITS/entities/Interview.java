@@ -16,6 +16,7 @@ import java.util.Set;
 @Table(name = "interview")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@jsonid")
 public class Interview {
+
     @Id
     @NotNull
     private int interviewId;

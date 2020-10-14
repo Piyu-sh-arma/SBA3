@@ -27,4 +27,6 @@ public interface InterviewService {
 
     Interview removeUsersFromInterview(int interviewId, int userId);
 
+    Interview updateInterviewStatus(int interviewId, String status);
+
 }

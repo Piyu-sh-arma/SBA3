@@ -113,4 +113,11 @@ public class InterviewServiceImpl implements InterviewService {
         interview.getUsers().remove(user);
         return interviewRepository.save(interview);
     }
+
+    @Override
+    public Interview updateInterviewStatus(int interviewId, String status) {
+        Interview interview = interviewRepository.findById(interviewId).orElseThrow(() -> new InvalidData("Interview Id is not found."));
+        interview.setStatus(status);
+        return interviewRepository.save(interview);
+    }
 }
